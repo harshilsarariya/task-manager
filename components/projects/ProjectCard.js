@@ -11,7 +11,7 @@ import {
 
 const ProjectCard = ({ navigation }) => {
   return (
-    <ScrollView style={{ height: 710 }} showsVerticalScrollIndicator={false}>
+    <ScrollView style={{ height: 670 }} showsVerticalScrollIndicator={false}>
       <TouchableOpacity
         style={styles.container}
         onPress={() => navigation.navigate("ProjectDetails1")}
@@ -34,7 +34,11 @@ const ProjectCard = ({ navigation }) => {
           </View>
         </View>
       </TouchableOpacity>
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate("ProjectDetails1")}
+        activeOpacity={0.8}
+      >
         <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/avtar.jpg")}
@@ -51,8 +55,12 @@ const ProjectCard = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
-      <View style={styles.container}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate("ProjectDetails1")}
+        activeOpacity={0.8}
+      >
         <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/avtar.jpg")}
@@ -69,8 +77,12 @@ const ProjectCard = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
-      <View style={styles.container}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate("ProjectDetails1")}
+        activeOpacity={0.8}
+      >
         <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/avtar.jpg")}
@@ -87,8 +99,12 @@ const ProjectCard = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
-      <View style={styles.container}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate("ProjectDetails1")}
+        activeOpacity={0.8}
+      >
         <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/avtar.jpg")}
@@ -105,8 +121,12 @@ const ProjectCard = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
-      <View style={styles.container}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => navigation.navigate("ProjectDetails1")}
+        activeOpacity={0.8}
+      >
         <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/avtar.jpg")}
@@ -123,25 +143,7 @@ const ProjectCard = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
-          </View>
-        </View>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

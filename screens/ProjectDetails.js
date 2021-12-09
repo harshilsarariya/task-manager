@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Header from "../components/home/Header";
+import NewTask from "../components/projectDetails/NewTask";
 import ProgressCategory from "../components/projectDetails/ProgressCategory";
 import TaskList from "../components/projectDetails/TaskList";
 
@@ -10,6 +11,7 @@ const ProjectDetails = () => {
       <Header title={"Sam's Project"} />
       <ProgressCategory />
       <TaskList />
+      <NewTask />
     </View>
   );
 };
