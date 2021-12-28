@@ -1,14 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./screens/Home";
-import Projects from "./screens/Projects";
+import ProjectDetails from "./screens/ProjectDetails";
 import Entypo from "react-native-vector-icons/Entypo";
 import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Navigation from "./Navigation";
-import ProjectDetails from "./screens/ProjectDetails";
-
+import Account from "./screens/Account";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -44,19 +42,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="ProjectDetails"
-        component={ProjectDetails}
-        options={{
-          headerShown: false,
-          tabBarLabel: "",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="alarm-outline" color={color} size={28} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Projects2"
-        component={Projects}
+        name="Account"
+        component={Account}
         options={{
           headerShown: false,
           tabBarLabel: "",
