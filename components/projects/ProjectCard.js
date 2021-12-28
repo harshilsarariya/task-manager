@@ -1,149 +1,57 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   ScrollView,
-  Button,
   TouchableOpacity,
 } from "react-native";
+import { db } from "../../firebase";
 
 const ProjectCard = ({ navigation }) => {
+  const [info, setInfo] = useState([]);
+
+  useLayoutEffect(() => {
+    const unsubscribe = db
+      .collection("Projects")
+      .orderBy("createdAt")
+      .onSnapshot((snapshot) =>
+        setInfo(
+          snapshot.docs.map((doc) => ({
+            data: doc.data(),
+          }))
+        )
+      );
+    return unsubscribe;
+  });
   return (
     <ScrollView style={{ height: 670 }} showsVerticalScrollIndicator={false}>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
+      {info.map((data, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.container}
+          onPress={() => navigation.navigate("ProjectDetails1")}
+          activeOpacity={0.8}
+        >
+          <View style={styles.cardContainer}>
             <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
+              source={require("../../assets/images/avtar.jpg")}
+              style={styles.userImage}
             />
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
+            <View style={styles.card}>
+              <View>
+                <Text style={styles.taskCount}>12/12tasks • 100%</Text>
+                <Text style={styles.name}>{data.data.Name}</Text>
+              </View>
+              <Image
+                source={require("../../assets/images/task.png")}
+                style={styles.image}
+              />
             </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
           </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => navigation.navigate("ProjectDetails1")}
-        activeOpacity={0.8}
-      >
-        <View style={styles.cardContainer}>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-          <View style={styles.card}>
-            <View>
-              <Text style={styles.taskCount}>12/12tasks • 100%</Text>
-              <Text style={styles.name}>Super App</Text>
-            </View>
-            <Image
-              source={require("../../assets/images/task.png")}
-              style={styles.image}
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ))}
     </ScrollView>
   );
 };

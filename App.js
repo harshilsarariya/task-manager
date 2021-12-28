@@ -1,13 +1,16 @@
 import React from "react";
 import TabNavigator from "./TabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import ProjectState from "./context/projects/projectState";
 
 const App = () => {
   return (
-    <NavigationContainer>
-      {/* bottom tab navigation */}
-      <TabNavigator />
-    </NavigationContainer>
+    <ProjectState>
+      <NavigationContainer>
+        {/* bottom tab navigation */}
+        <TabNavigator />
+      </NavigationContainer>
+    </ProjectState>
   );
 };
 

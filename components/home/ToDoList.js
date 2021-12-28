@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,42 +6,43 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { db } from "../../firebase";
 
 const ToDoList = () => {
+  const [info, setInfo] = useState([]);
+
+  useLayoutEffect(() => {
+    const unsubscribe = db
+      .collection("Projects")
+      .doc("M4xAO9WxbyF2Umu95W6V")
+      .collection("task")
+      .onSnapshot((snapshot) =>
+        setInfo(
+          snapshot.docs.map((doc) => ({
+            data: doc.data(),
+          }))
+        )
+      );
+    return unsubscribe;
+  });
+  // console.log(info);
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>To Do</Text>
       <ScrollView horizontal>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
-          <Text style={styles.category}>SuperApp</Text>
-          <Text style={styles.title}>Redesign home screen</Text>
-          <Text style={styles.date}>till 10 May 2021</Text>
-        </TouchableOpacity>
+        {info.map((data, index) => (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            key={index}
+            style={styles.boxContainer}
+          >
+            <Text style={styles.category}>SuperApp</Text>
+            <Text style={styles.title}> {data.data.taskName}</Text>
+            <Text style={styles.date}>
+              {data.data.dueDate.toDate().toDateString()}
+            </Text>
+          </TouchableOpacity>
+        ))}
         <TouchableOpacity activeOpacity={0.8} style={styles.boxContainer}>
           <Text style={styles.category}>SuperApp</Text>
           <Text style={styles.title}>Redesign home screen</Text>

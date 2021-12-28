@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import projectContext from "../../context/projects/projectContext";
 import {
   Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   TouchableOpacity,
   TextInput,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import firebase from "firebase/compat/app";
-import { db } from "../../firebase";
+import Entypo from "react-native-vector-icons/Entypo";
 
-const NewTask = ({ route }) => {
+const NewProject = () => {
+  const context = useContext(projectContext);
+  const { addProject } = context;
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, onChangeText] = useState("");
+  const [text, setText] = useState("");
   const [date, setDate] = useState(new Date("2020-06-12"));
   const [show, setShow] = useState(false);
 
@@ -23,39 +24,18 @@ const NewTask = ({ route }) => {
     setShow(Platform.OS === "ios");
     setDate(currentDate);
 
-    console.log(currentDate);
+    console.log(currentDate.nativeEvent.timestamp());
+  };
+
+  const handleClick = () => {
+    addProject(text, date.nativeEvent.timestamp);
+    setText("");
+    setDate(new Date("2020-06-12"));
+    setModalVisible(!modalVisible);
   };
 
   const showDatepicker = () => {
     setShow(true);
-  };
-
-  const addTask = async (name, date) => {
-    // API call
-    const data = {
-      taskName: name,
-      dueDate: date,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-
-    await db
-      .collection("Projects")
-      // .doc(route.params.id)
-      .doc("M4xAO9WxbyF2Umu95W6V")
-      .collection("task")
-      .add(data)
-      .catch((error) => {
-        console.log(
-          "There has been a problem with your fetch operation: " + error.message
-        );
-      });
-  };
-
-  const handleClick = () => {
-    addTask(text, date.nativeEvent.timestamp);
-    onChangeText("");
-    setDate(new Date("2020-06-12"));
-    setModalVisible(!modalVisible);
   };
 
   return (
@@ -67,17 +47,31 @@ const NewTask = ({ route }) => {
             <View style={styles.modalView}>
               <TextInput
                 style={styles.input}
-                onChangeText={onChangeText}
+                onChangeText={setText}
                 value={text}
-                placeholder="Enter New Task"
+                placeholder="Project Name"
               />
               <View>
-                <View style={styles.datepickerButton}>
+                <View
+                  style={[
+                    styles.datepickerButton,
+                    { backgroundColor: "#647AFF" },
+                  ]}
+                >
+                  <Entypo
+                    name={"calendar"}
+                    style={{
+                      marginRight: 10,
+                    }}
+                    size={20}
+                    color={"white"}
+                  />
+
                   <Text
-                    style={styles.datepickertextStyle}
+                    style={[styles.datepickertextStyle]}
                     onPress={showDatepicker}
                   >
-                    Set Due Date
+                    Today
                   </Text>
                 </View>
 
@@ -92,12 +86,15 @@ const NewTask = ({ route }) => {
                   />
                 )}
               </View>
-              <Pressable
-                style={[styles.button, { marginTop: 80 }]}
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  { marginTop: 80, backgroundColor: "#066AFF" },
+                ]}
                 onPress={() => handleClick()}
               >
                 <Text style={styles.textStyle}>Done</Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -109,14 +106,14 @@ const NewTask = ({ route }) => {
           style={[styles.button]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.buttonText}>+{"  "} New Task</Text>
+          <Text style={styles.buttonText}>+{"  "} New Project</Text>
         </TouchableOpacity>
       </View>
     </>
   );
 };
 
-export default NewTask;
+export default NewProject;
 
 const styles = StyleSheet.create({
   container: {
@@ -129,16 +126,17 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#5F33E1",
+    backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "center",
     padding: 15,
     borderRadius: 30,
     width: 200,
     position: "relative",
+    marginBottom: 20,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontSize: 20,
   },
   datepickerButton: {
@@ -151,6 +149,7 @@ const styles = StyleSheet.create({
     width: 150,
     position: "relative",
     right: 60,
+    alignItems: "center",
   },
   datepickertextStyle: {
     color: "white",
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    height: 350,
+    height: 400,
     alignItems: "center",
     justifyContent: "flex-end",
     shadowColor: "#000",

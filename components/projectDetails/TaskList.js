@@ -1,34 +1,50 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
-import GestureRecognizer, {
-  swipeDirections,
-} from "react-native-swipe-gestures";
+import { SwipeListView } from "react-native-swipe-list-view";
+import { db } from "../../firebase";
+
+const LeftAction = () => (
+  <View style={styles.leftAction}>
+    <Text style={styles.textAction}>Done</Text>
+  </View>
+);
 
 const TaskList = () => {
+  const [info, setInfo] = useState([]);
+
+  useLayoutEffect(() => {
+    const unsubscribe = db
+      .collection("Projects")
+      .doc("M4xAO9WxbyF2Umu95W6V")
+      .collection("task")
+      .onSnapshot((snapshot) =>
+        setInfo(
+          snapshot.docs.map((doc) => ({
+            data: doc.data(),
+          }))
+        )
+      );
+    return unsubscribe;
+  });
+  // console.log(info);
   return (
-    <ScrollView style={{ height: 620 }} showsVerticalScrollIndicator={false}>
-      <GestureRecognizer
-        swipeDirections="SWIPE_LEFT"
-        onSwipeLeft={() => console.log("swipe lefted")}
-      >
+    <SwipeListView
+      style={{ height: 620 }}
+      showsVerticalScrollIndicator={false}
+      data={info}
+      renderItem={(data) => (
         <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <View style={styles.titleContainer}>
             <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-              Create new blog post
+              {data.item.data.taskName}
             </Text>
             <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
           </View>
           <View style={styles.dateAndUser}>
             <View style={styles.date}>
               <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-              <Text>till 10 May 2021</Text>
+              <Text>{data.item.data.dueDate.toDate().toDateString()}</Text>
             </View>
             <Image
               source={require("../../assets/images/avtar.jpg")}
@@ -36,129 +52,13 @@ const TaskList = () => {
             />
           </View>
         </View>
-      </GestureRecognizer>
-
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-            Create new blog post
-          </Text>
-          <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
-        </View>
-        <View style={styles.dateAndUser}>
-          <View style={styles.date}>
-            <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-            <Text>till 10 May 2021</Text>
-          </View>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-            Create new blog post
-          </Text>
-          <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
-        </View>
-        <View style={styles.dateAndUser}>
-          <View style={styles.date}>
-            <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-            <Text>till 10 May 2021</Text>
-          </View>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-            Create new blog post
-          </Text>
-          <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
-        </View>
-        <View style={styles.dateAndUser}>
-          <View style={styles.date}>
-            <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-            <Text>till 10 May 2021</Text>
-          </View>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-            Create new blog post
-          </Text>
-          <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
-        </View>
-        <View style={styles.dateAndUser}>
-          <View style={styles.date}>
-            <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-            <Text>till 10 May 2021</Text>
-          </View>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "800" }}>
-            Create new blog post
-          </Text>
-          <Text style={{ color: "#1DC2A3", fontSize: 20 }}>•</Text>
-        </View>
-        <View style={styles.dateAndUser}>
-          <View style={styles.date}>
-            <Entypo name={"calendar"} style={{ marginRight: 10 }} size={20} />
-            <Text>till 10 May 2021</Text>
-          </View>
-          <Image
-            source={require("../../assets/images/avtar.jpg")}
-            style={styles.userImage}
-          />
-        </View>
-      </View>
-    </ScrollView>
+      )}
+      keyExtractor={(data, index) => index.toString()}
+      renderHiddenItem={LeftAction}
+      disableRightSwipe
+      // leftOpenValue={100}
+      rightOpenValue={-100}
+    />
   );
 };
 
@@ -169,6 +69,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 20,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   dateAndUser: {
     flexDirection: "row",
@@ -187,5 +92,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginLeft: 20,
     marginTop: 20,
+  },
+  leftAction: {
+    backgroundColor: "#AB96ED",
+    marginTop: 20,
+    padding: 20,
+    borderRadius: 20,
+    height: 105,
+    borderRadius: 20,
+  },
+  textAction: {
+    color: "#fff",
+    fontSize: 25,
+    left: 220,
+    marginTop: 17,
   },
 });
