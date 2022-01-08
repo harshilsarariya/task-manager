@@ -1,15 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Header from "../components/home/Header";
-import HomeAccount from "../components/account/HomeAccount";
-import Divider from "react-native-divider";
-
-const Account = () => {
+// import HomeAccount from "../components/account/HomeAccount";
+import AccountNavigation from "../components/account/AccountNavigation";
+import Login from "../components/account/Login";
+import SignUp from "../components/account/SignUp";
+const Account = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Header title="Account" />
-      <Divider />
-      <HomeAccount />
+      <Login navigation={navigation} />
     </View>
   );
 };
