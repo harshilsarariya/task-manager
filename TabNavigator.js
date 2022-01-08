@@ -6,17 +6,19 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Octicons from "react-native-vector-icons/Octicons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Navigation from "./Navigation";
-import Account from "./screens/Account";
+import AccountNavigation from "./components/account/AccountNavigation";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="AccountNavigation"
       barStyle={{ paddingBottom: 48 }}
       screenOptions={{
         tabBarActiveTintColor: "#6033E1",
         tabBarInactiveTintColor: "#BEABF4",
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: [{ display: "flex" }, null],
       }}
     >
       <Tab.Screen
@@ -31,7 +33,7 @@ const TabNavigator = () => {
         component={Home}
       />
       <Tab.Screen
-        name="Projects"
+        name="ProjectsHome"
         component={Navigation}
         options={{
           headerShown: false,
@@ -42,8 +44,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Account"
-        component={Account}
+        name="AccountNavigation"
+        component={AccountNavigation}
         options={{
           headerShown: false,
           tabBarLabel: "",

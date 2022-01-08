@@ -31,7 +31,7 @@ const ProjectCard = ({ navigation }) => {
         <TouchableOpacity
           key={index}
           style={styles.container}
-          onPress={() => navigation.navigate("ProjectDetails1")}
+          onPress={() => navigation.navigate("ProjectDetails")}
           activeOpacity={0.8}
         >
           <View style={styles.cardContainer}>

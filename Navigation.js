@@ -10,12 +10,12 @@ const Navigation = () => {
     <Stack.Navigator initialRouteName={Projects}>
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Projects1"
+        name="Projects"
         component={Projects}
       />
       <Stack.Screen
         options={{ headerShown: false }}
-        name="ProjectDetails1"
+        name="ProjectDetails"
         component={ProjectDetails}
       />
     </Stack.Navigator>
