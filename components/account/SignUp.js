@@ -10,29 +10,36 @@ import Header from "../home/Header";
 import { Button, TextInput } from "react-native-paper";
 import { auth } from "../../firebase";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Warning from "../warning/Warning";
+
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const handleLogIn = () => {
     navigation.navigate("Login");
   };
 
   const signUpWithEmail = async () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        authUser.user.updateProfile({
-          displayName: name,
+    try {
+      const result = await auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          authUser.user.updateProfile({
+            displayName: name,
+          });
         });
-      })
-      .catch((error) => alert(error.message));
-
-    setName("");
-    setEmail("");
-    setPassword("");
-    navigation.navigate("HomeAccount");
+      setName("");
+      setEmail("");
+      setPassword("");
+      navigation.navigate("HomeAccount");
+    } catch {
+      setVisible(true);
+      setWarning(true);
+    }
   };
 
   return (
@@ -86,6 +93,33 @@ const SignUp = ({ navigation }) => {
           </View>
         </View>
       </KeyboardAvoidingView>
+      {warning ? (
+        <Warning
+          visible={visible}
+          setVisible={setVisible}
+          message="Invalid email address."
+        />
+      ) : (
+        <></>
+      )}
+      {password.length <= 6 ? (
+        <Warning
+          visible={visible}
+          setVisible={setVisible}
+          message="Password length must be greater than 6 characters."
+        />
+      ) : (
+        <></>
+      )}
+      {name.length <= 6 ? (
+        <Warning
+          visible={visible}
+          setVisible={setVisible}
+          message="Name must be greater than 6 characters."
+        />
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 };

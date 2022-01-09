@@ -10,23 +10,29 @@ import Header from "../home/Header";
 import { Button, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../firebase";
+import Warning from "../warning/Warning";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
 
-  const loginWithEmail = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => alert(error));
-
-    setEmail("");
-    setPassword("");
-    navigation.navigate("HomeAccount");
+  const loginWithEmail = async () => {
+    try {
+      const result = await auth.signInWithEmailAndPassword(email, password);
+      console.log(result);
+      setEmail("");
+      setPassword("");
+      navigation.navigate("HomeAccount");
+    } catch {
+      setVisible(true);
+      setWarning(true);
+    }
   };
 
   return (
@@ -69,6 +75,15 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
       </KeyboardAvoidingView>
+      {warning ? (
+        <Warning
+          visible={visible}
+          setVisible={setVisible}
+          message="Invalid Email or Password"
+        />
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 };
